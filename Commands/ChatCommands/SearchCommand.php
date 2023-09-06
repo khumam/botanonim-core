@@ -61,7 +61,7 @@ class SearchCommand extends UserCommand
 
     private function checkQueue($chatId): mixed
     {
-        $queue = Queue::get(['user_id', '!=', $chatId, 'and', 'chat_id', '!=', $chatId, 'and', 'status', '=', 'search', 'order by rand() limit 1']);
+        $queue = Queue::get(['user_id', '!=', $chatId, 'and', 'chat_id', '!=', $chatId, 'and', 'status', '=', "'search'", 'order by rand() limit 1']);
         return $queue;
     }
 
