@@ -56,7 +56,7 @@ class SearchCommand extends UserCommand
     private function checkNotVerified($chatId): bool
     {
         $user = User::first(['user_id', '=', $chatId]);
-        return count($user) == 0;
+        return $user['verifed_at'] == null;
     }
 
     private function checkQueue($chatId): mixed
