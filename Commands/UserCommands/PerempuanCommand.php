@@ -33,7 +33,7 @@ class PerempuanCommand extends UserCommand
         return Gender::create([
             'chat_id' => $chatId,
             'user_id' => $chatId,
-            'gender' => 'm',
+            'gender' => 'w',
         ]);
     }
 
