@@ -30,7 +30,8 @@ class RequestCommand extends UserCommand
 
     private function setAction($chatId): \PDOStatement|bool
     {
-        $checkRequestStatus = RequestJoin::first(['user_id' => $chatId]);
+        $checkRequestStatus = RequestJoin::first(['user_id', '=', $chatId]);
+        var_dump($checkRequestStatus);
         if (!$checkRequestStatus) {
             return RequestJoin::create([
                 'user_id' => $chatId,

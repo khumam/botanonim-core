@@ -24,6 +24,10 @@ class SearchCommand extends UserCommand
         try {
             $message = $this->getMessage();
             $chatId = $message->getChat()->getId();
+
+            if ($this->checkActiveQueue($chatId)) {
+                return MessageHelper::sendMessage($chatId, 'Kamu sudah masuk ke dalam antrian. Cie belum dapet. Sabar ya nunggu sebentar lagi');
+            }
             
             if ($this->checkActiveChat($chatId)) {
                 return MessageHelper::sendMessage($chatId, 'Kamu masih berhubungan dengan orang lain masa mau cari yang lain lagi :( /stop dulu dong');
@@ -39,12 +43,19 @@ class SearchCommand extends UserCommand
                 return MessageHelper::sendMessage($chatId, 'Tunggu sampai ada yang on ya. Kalau ada yang on nanti kami kasih notifikasi.');
             } else {
                 $this->setActiveChat($queue, $chatId);
+                $this->deleteQueue($queue, $chatId);
                 MessageHelper::sendMessage($chatId, 'Kamu mendapatkan teman chat. Selamat berbincang');
                 return MessageHelper::sendMessage($queue['user_id'], 'Kamu mendapatkan teman chat. Selamat berbincang');
             }
         } catch (\Exception $err) {
             return MessageHelper::sendMessage($chatId, 'Terjadi kesalahan. Silakan coba beberapa saat lagi.');
         }
+    }
+
+    private function checkActiveQueue($chatId): mixed
+    {
+        $queue = Queue::first(['user_id', '=', $chatId, 'or', 'chat_id', '=', $chatId]);
+        return $queue;
     }
 
     private function checkActiveChat($chatId): mixed 
@@ -83,6 +94,12 @@ class SearchCommand extends UserCommand
             'to_id' => $queue['chat_id'],
             'status' => 'search'
         ]);
+    }
+
+    private function deleteQueue($queue, $chatId): \PDOStatement|bool
+    {
+        Queue::delete(['user_id', '=', $chatId]);
+        return Queue::delete(['user_id', '=', $queue['user_id']]);
     }
 
     private function generateMessage(): string
