@@ -1,0 +1,13 @@
+{
+    "name": "khoerulumam/anonimbot",
+    "description": "Telegram anonim chat bot",
+    "authors": [
+        {
+            "name": "Khoerul Umam",
+            "email": "khoerul.umam@gotoko.co.id"
+        }
+    ],
+    "require": {
+        "longman/telegram-bot": "^0.81.0"
+    }
+}
