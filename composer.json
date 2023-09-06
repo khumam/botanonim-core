@@ -9,5 +9,11 @@
     ],
     "require": {
         "longman/telegram-bot": "^0.81.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Helpers\\": "Helpers/",
+        "Models\\": "Models/"
+      }
     }
 }

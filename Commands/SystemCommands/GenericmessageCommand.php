@@ -44,7 +44,7 @@ class GenericmessageCommand extends SystemCommand
     { 
         $chatId = $message->getChat()->getId();
         $activeChat = ActiveChat::first(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
-        if (count($activeChat) == 0) {
+        if (!$activeChat) {
             return MessageHelper::sendMessage($chatId, 'Kamu tidak sedang dalam percakapan. Gunakan /search untuk memulai mencari teman pasangan chat. Good luck!');
         }
 

@@ -30,7 +30,7 @@ class ReportCommand extends UserCommand
         }
     }
 
-    private function setAction($chatId, $reason): bool
+    private function setAction($chatId, $reason): \PDOStatement|bool
     {
         $activeChat = ActiveChat::get(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
         $reportedUser = $activeChat['from_id'] == $chatId ? $activeChat['to_id'] : $activeChat['from_id'];

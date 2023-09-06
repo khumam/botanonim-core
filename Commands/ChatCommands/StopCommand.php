@@ -49,12 +49,12 @@ class StopCommand extends UserCommand
         return count($activeChat) == 0;
     }
 
-    private function getActiveChat($chatId)
+    private function getActiveChat($chatId): mixed
     {
         return ActiveChat::first(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
     }
 
-    private function deleteActiveChat($chatId): bool
+    private function deleteActiveChat($chatId): \PDOStatement|bool
     {
         return ActiveChat::delete(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
     }

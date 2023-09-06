@@ -21,20 +21,27 @@ class LakilakiCommand extends UserCommand
         try {
             $message = $this->getMessage();
             $chatId = $message->getChat()->getId();
-            $this->setAction($chatId);
+            $gender = $this->setAction($chatId);
+            if (!$gender) {
+                return MessageHelper::sendMessage($chatId, 'Kamu sudah melakukan konfirmasi. Perubahan tidak bisa dilakukan.');
+            }
             return MessageHelper::sendMessage($chatId, $this->generateMessage());
         } catch (\Exception $err) {
             return MessageHelper::sendMessage($chatId, 'Terjadi kesalahan, silakan coba lagi nanti');
         }
     }
 
-    private function setAction($chatId): bool
+    private function setAction($chatId): \PDOStatement | bool
     {
-        return Gender::create([
-            'chat_id' => $chatId,
-            'user_id' => $chatId,
-            'gender' => 'm',
-        ]);
+        $gender = Gender::first(['user_id', '=', $chatId]);
+        if (!$gender) {
+            return Gender::create([
+                'chat_id' => $chatId,
+                'user_id' => $chatId,
+                'gender' => 'm',
+            ]);
+        }
+        return false;
     }
 
     private function generateMessage(): string

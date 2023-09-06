@@ -19,9 +19,17 @@ class ComposerStaticInitf3cff5d118b17886f286f736de10c3c0
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
         ),
+        'M' => 
+        array (
+            'Models\\' => 7,
+        ),
         'L' => 
         array (
             'Longman\\TelegramBot\\' => 20,
+        ),
+        'H' => 
+        array (
+            'Helpers\\' => 8,
         ),
         'G' => 
         array (
@@ -38,16 +46,24 @@ class ComposerStaticInitf3cff5d118b17886f286f736de10c3c0
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
+        'Models\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Models',
+        ),
         'Longman\\TelegramBot\\' => 
         array (
             0 => __DIR__ . '/..' . '/longman/telegram-bot/src',
+        ),
+        'Helpers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Helpers',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

@@ -34,7 +34,7 @@ class SearchCommand extends UserCommand
             }
 
             $queue = $this->checkQueue($chatId);
-            if (count($queue) == 0) {
+            if (!$queue) {
                 $this->setQueue($chatId);
                 return MessageHelper::sendMessage($chatId, 'Tunggu sampai ada yang on ya. Kalau ada yang on nanti kami kasih notifikasi.');
             } else {
@@ -47,15 +47,15 @@ class SearchCommand extends UserCommand
         }
     }
 
-    private function checkActiveChat($chatId): bool 
+    private function checkActiveChat($chatId): mixed 
     {
         $activeChat = ActiveChat::first(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
-        return count($activeChat) > 0;
+        return $activeChat;
     }
 
     private function checkNotVerified($chatId): bool
     {
-        $user = User::first(['user_id', '=', $chatId]);
+        $user = User::first(['id', '=', $chatId]);
         return $user['verifed_at'] == null;
     }
 
@@ -65,7 +65,7 @@ class SearchCommand extends UserCommand
         return $queue;
     }
 
-    private function setQueue($chatId): bool
+    private function setQueue($chatId): \PDOStatement|bool
     {
         $gender = Gender::first(['user_id', '=', $chatId]);
         return Queue::create([
@@ -76,7 +76,7 @@ class SearchCommand extends UserCommand
         ]);
     }
 
-    private function setActiveChat($queue, $chatId): bool
+    private function setActiveChat($queue, $chatId): \PDOStatement|bool
     {
         return ActiveChat::create([
             'from_id' => $chatId,
