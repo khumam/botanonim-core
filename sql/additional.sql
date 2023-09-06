@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS `banneds` (
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
 
+  PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 CREATE TABLE IF NOT EXISTS `active_chats` (
@@ -16,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `active_chats` (
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
 
+  PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 CREATE TABLE IF NOT EXISTS `reports` (
@@ -25,6 +29,8 @@ CREATE TABLE IF NOT EXISTS `reports` (
   `reason` text NULL DEFAULT '-' COMMENT 'Identifier why user reported',
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
+
+  PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
@@ -37,6 +43,8 @@ CREATE TABLE IF NOT EXISTS `queues` (
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
 
+  PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 CREATE TABLE IF NOT EXISTS `blacklists` (
@@ -47,6 +55,8 @@ CREATE TABLE IF NOT EXISTS `blacklists` (
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
 
+  PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 CREATE TABLE IF NOT EXISTS `genders` (
@@ -56,7 +66,9 @@ CREATE TABLE IF NOT EXISTS `genders` (
   `gender` ENUM('m', 'w') NULL DEFAULT NULL COMMENT 'Identifier gender',
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
-)
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 CREATE TABLE IF NOT EXISTS `requests` (
   `id` bigint(20) unsigned AUTO_INCREMENT COMMENT 'Unique identifier for this entry',
@@ -64,4 +76,6 @@ CREATE TABLE IF NOT EXISTS `requests` (
   `chat_id` bigint NULL DEFAULT NULL COMMENT 'Unique user or chat identifier',
   `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
   `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
-)
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
