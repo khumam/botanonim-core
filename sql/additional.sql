@@ -79,3 +79,15 @@ CREATE TABLE IF NOT EXISTS `requests` (
 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `admin_notes` (
+  `id` bigint(20) unsigned AUTO_INCREMENT COMMENT 'Unique identifier for this entry',
+  `user_id` bigint NULL DEFAULT NULL COMMENT 'Identifier who are reported user',
+  `chat_id` bigint NULL DEFAULT NULL COMMENT 'Identifier who are report the user',
+  `notes` text NULL DEFAULT '-' COMMENT 'Identifier why user reported',
+  `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
+  `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
+
+  PRIMARY KEY (`id`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;

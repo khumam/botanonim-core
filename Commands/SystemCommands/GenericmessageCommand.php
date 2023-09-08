@@ -45,10 +45,10 @@ class GenericmessageCommand extends SystemCommand
         $chatId = $message->getChat()->getId();
         $activeChat = ActiveChat::first(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
         if (!$activeChat) {
-            return MessageHelper::sendMessage($chatId, 'Kamu tidak sedang dalam percakapan. Gunakan /search untuk memulai mencari teman pasangan chat. Good luck!');
+            return MessageHelper::sendMessageAsUser($chatId, 'Kamu tidak sedang dalam percakapan. Gunakan /search untuk memulai mencari teman pasangan chat. Good luck!');
         }
 
         $sendTo = $activeChat['from_id'] == $chatId ? $activeChat['to_id'] : $activeChat['from_id'];
-        return MessageHelper::sendMessage($sendTo, $message->getText());
+        return MessageHelper::sendMessageAsUser($sendTo, $message->getText());
     }
 }

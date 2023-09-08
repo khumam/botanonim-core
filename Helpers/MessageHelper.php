@@ -18,4 +18,16 @@ class MessageHelper
 
         return Request::sendMessage($data);
     }
+
+    public static function sendMessageAsUser($chatId, $message, $parseMode = 'HTML'): ServerResponse
+    {
+        ActionHelper::sendTyping($chatId);
+        $data = [
+            'chat_id' => $chatId,
+            'parse_mode' => $parseMode,
+            'text' => $message,
+        ];
+
+        return Request::sendMessage($data);
+    }
 }
