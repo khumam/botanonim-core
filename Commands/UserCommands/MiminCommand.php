@@ -22,6 +22,9 @@ class MiminCommand extends UserCommand
             $message = $this->getMessage();
             $chatId = $message->getChat()->getId();
             $notes = trim($message->getText(true));
+            if ($notes == '' || $notes == null) {
+                return MessageHelper::sendMessage($chatId, $this->howTo());
+            }
             $this->setAction($chatId, $notes);
             return MessageHelper::sendMessage($chatId, $this->generateMessage());
         } catch (\Exception $err) {
@@ -41,5 +44,10 @@ class MiminCommand extends UserCommand
     private function generateMessage(): string
     {
         return "Terima kasih sudah menghubungi Admin. Kami cek dulu ya :)";
+    }
+
+    private function howTo(): string
+    {
+        return "Untuk menggunakannya ketik /mimin diikuti pesan yang akan disampaikan";
     }
 }

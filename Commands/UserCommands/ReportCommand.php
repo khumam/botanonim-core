@@ -23,6 +23,9 @@ class ReportCommand extends UserCommand
             $message = $this->getMessage();
             $chatId = $message->getChat()->getId();
             $reason = trim($message->getText(true));
+            if ($reason == '' || $reason == null) {
+                return MessageHelper::sendMessage($chatId, $this->howTo());
+            }
             $this->setAction($chatId, $reason);
             return MessageHelper::sendMessage($chatId, $this->generateMessage());
         } catch (\Exception $err) {
@@ -44,5 +47,10 @@ class ReportCommand extends UserCommand
     private function generateMessage(): string
     {
         return "Report berhasil dilakukan dan akan segera admin proses. Terima kasih sudah membantu bot lebih baik, orang baik :).";
+    }
+
+    private function howTo(): string
+    {
+        return "Untuk menggunakannya ketik /report diikuti dengan alasan kenapa direport. Gunakan command ini saat melakukan obrolan";
     }
 }
