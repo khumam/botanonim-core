@@ -2,6 +2,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
@@ -19,8 +20,8 @@ class RequestCommand extends UserCommand
     public function execute(): ServerResponse
     {
         try {
-            $message = $this->getMessage();
-            $chatId = $message->getChat()->getId();
+            $message = new CallbackHelper($this);
+            $chatId = $message->getChatId();
             $this->setAction($chatId);
             return MessageHelper::sendMessage($chatId, $this->generateMessage());
         } catch (\Exception $err) {

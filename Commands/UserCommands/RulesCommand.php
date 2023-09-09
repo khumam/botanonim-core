@@ -2,24 +2,26 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
 
-class StartCommand extends UserCommand
+class RulesCommand extends UserCommand
 {
 
-    protected $name = 'start';
-    protected $description = 'Start command';
-    protected $usage = '/start';
+    protected $name = 'rules';
+    protected $description = 'Rules command';
+    protected $usage = '/rules';
     protected $version = '1.2.0';
 
     public function execute(): ServerResponse
     {
-        $message = $this->getMessage();
-        $chatId = $message->getChat()->getId();
+        $message = new CallbackHelper($this);
+        $chatId = $message->getChatId();
+
         $replyMarkup = $this->generateReplyMarkup();
 
         return MessageHelper::sendMessage($chatId, $this->generateMessage(), 'HTML', $replyMarkup);
@@ -27,7 +29,7 @@ class StartCommand extends UserCommand
 
     private function generateMessage(): string
     {
-        return "Hallo selamat datang di UNNES Anonim Bot!\n\nIni merupakan bot anonim untuk mahasiswa UNNES! Kamu bisa mencari teman belajar, teman main, bantuan, dan lain sebagainya di sini. Semua data yang nantinya diterima bersifat anonim, jadi tidak akan tahu siapa yang mengirim dan siapa yang menerima. Karena ini bersifat anonim, pastikan kalian TIDAK MENGIRIM DATA PRIBADI ATAU DATA PENTING LAINNYA DI SINI. Jika ada yang demikian, admin tidak bertanggung jawab atas penyalahgunaan tersebut. Gunakan dengan bijak, ya!";
+        return "Rules dan Peraturan Bot\n\n1. Tidak boleh SARA dalam bentuk apapun\n2. Tidak boleh pornografi dalam bentuk apapun\n3. Tidak boleh mengarah ke pelecehan dalam bentuk apapun\n4. Tidak boleh mengirimkan data pribadi dalam bentuk apapun\n5. Tidak boleh promosi atau jualan dalam bentuk apapun\n6. Sejatinya bot dibuat untuk saling ngobrol, dan mencari teman\n7. Selalu berhati-hati dalam menggunakan\n8. Admin tidak bertanggung jawab jika terjadi sesuatu yang tidak mengenakan, akan tetapi akan berusaha membantu jika ada hal yang bertentangan dengan normal sosial yang berlaku.";
     }
 
     private function generateReplyMarkup()

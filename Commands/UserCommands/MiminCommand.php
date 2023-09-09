@@ -2,6 +2,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
@@ -19,9 +20,9 @@ class MiminCommand extends UserCommand
     public function execute(): ServerResponse
     {
         try {
-            $message = $this->getMessage();
-            $chatId = $message->getChat()->getId();
-            $notes = trim($message->getText(true));
+            $message = new CallbackHelper($this);
+            $chatId = $message->getChatId();
+            $notes = $message->getNotes();
             if ($notes == '' || $notes == null) {
                 return MessageHelper::sendMessage($chatId, $this->howTo());
             }
