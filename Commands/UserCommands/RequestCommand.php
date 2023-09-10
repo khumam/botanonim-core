@@ -7,6 +7,7 @@ use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
+use Models\Banned;
 use Models\RequestJoin;
 
 class RequestCommand extends UserCommand
@@ -22,6 +23,11 @@ class RequestCommand extends UserCommand
         try {
             $message = new CallbackHelper($this);
             $chatId = $message->getChatId();
+
+            if ($this->checkBanned($chatId)) {
+                return MessageHelper::sendMessage($chatId, 'Kamu telah dibanned, kamu tidak bisa menggunakan bot ini lagi. Kamu dibanned karena kami mendapatkan laporan bahwa kamu melanggar aturan yang ada.');
+            }
+
             $this->setAction($chatId);
             return MessageHelper::sendMessage($chatId, $this->generateMessage());
         } catch (\Exception $err) {
@@ -32,7 +38,6 @@ class RequestCommand extends UserCommand
     private function setAction($chatId): \PDOStatement|bool
     {
         $checkRequestStatus = RequestJoin::first(['user_id', '=', $chatId]);
-        var_dump($checkRequestStatus);
         if (!$checkRequestStatus) {
             return RequestJoin::create([
                 'user_id' => $chatId,
@@ -40,6 +45,12 @@ class RequestCommand extends UserCommand
             ]);
         }
         return true;
+    }
+
+    private function checkBanned($chatId): \PDOStatement|bool
+    {
+        $banned = Banned::first(['user_id', '=', $chatId, 'or', 'chat_id', '=', $chatId]);
+        return $banned ? true : false;
     }
 
     private function generateMessage(): string

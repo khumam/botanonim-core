@@ -29,7 +29,7 @@ class RulesCommand extends UserCommand
 
     private function generateMessage(): string
     {
-        return "Rules dan Peraturan Bot\n\n1. Tidak boleh SARA dalam bentuk apapun\n2. Tidak boleh pornografi dalam bentuk apapun\n3. Tidak boleh mengarah ke pelecehan dalam bentuk apapun\n4. Tidak boleh mengirimkan data pribadi dalam bentuk apapun\n5. Tidak boleh promosi atau jualan dalam bentuk apapun\n6. Sejatinya bot dibuat untuk saling ngobrol, dan mencari teman\n7. Selalu berhati-hati dalam menggunakan\n8. Admin tidak bertanggung jawab jika terjadi sesuatu yang tidak mengenakan, akan tetapi akan berusaha membantu jika ada hal yang bertentangan dengan normal sosial yang berlaku.";
+        return "Rules dan Peraturan Bot\n\n1. Tidak boleh SARA dalam bentuk apapun\n2. Tidak boleh pornografi dalam bentuk apapun\n3. Tidak boleh mengarah ke pelecehan dalam bentuk apapun\n4. Tidak boleh mengirimkan data pribadi dalam bentuk apapun\n5. Tidak boleh promosi atau jualan dalam bentuk apapun\n6. Sejatinya bot dibuat untuk saling ngobrol, dan mencari teman\n7. Selalu berhati-hati dalam menggunakan\n8. Admin tidak bertanggung jawab jika terjadi sesuatu yang tidak mengenakan di luar jangkauan bot ini. Jika ada tindakan yang melanggar norma dan agama yang berlaku, admin hanya bisa membantu sebatas di platform ini. Di luar itu, akan menjadi tanggung jawab sesama pengguna.\n\nDengan menggunakan bot ini, artinya kamu menyetujui aturan penggunaan bot ini dan sadar bahwa segala pelanggaran yang dilakukan akan kami tindak tegas. Untuk para pengguna yang menyimpang aturan, kami dapat mencari tahu detail akun telegram yang digunakan (hanya untuk para pengguna yang menyimpang dari aturan)";
     }
 
     private function generateReplyMarkup()
