@@ -31,4 +31,19 @@ class MessageHelper
 
         return Request::sendMessage($data);
     }
+
+    public static function sendPhoto($chatId, $url): ServerResponse
+    {
+        ActionHelper::sendTyping($chatId);
+        $data = [
+            'chat_id' => $chatId,
+            'photo' => $url
+        ];
+        return Request::sendPhoto($data);
+    }
+
+    public static function sendEmptyResponse(): ServerResponse
+    {
+        return Request::emptyResponse();
+    }
 }

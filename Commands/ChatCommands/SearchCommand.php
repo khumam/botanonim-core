@@ -7,6 +7,7 @@ use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
 use Models\ActiveChat;
+use Models\Banned;
 use Models\Gender;
 use Models\Queue;
 use Models\User;
@@ -24,6 +25,10 @@ class SearchCommand extends UserCommand
         try {
             $message = $this->getMessage();
             $chatId = $message->getChat()->getId();
+
+            if ($this->checkBanned($chatId)) {
+                return MessageHelper::sendMessage($chatId, 'Kamu telah dibanned, kamu tidak bisa menggunakan bot ini lagi. Kamu dibanned karena kami mendapatkan laporan bahwa kamu melanggar aturan yang ada.');
+            }
 
             if ($this->checkActiveQueue($chatId)) {
                 return MessageHelper::sendMessage($chatId, 'Kamu sudah masuk ke dalam antrian. Cie belum dapet. Sabar ya nunggu sebentar lagi');
@@ -94,6 +99,12 @@ class SearchCommand extends UserCommand
             'to_id' => $queue['chat_id'],
             'status' => 'search'
         ]);
+    }
+
+    private function checkBanned($chatId): \PDOStatement|bool
+    {
+        $banned = Banned::first(['user_id', '=', $chatId, 'or', 'chat_id', '=', $chatId]);
+        return $banned ? true : false;
     }
 
     private function deleteQueue($queue, $chatId): \PDOStatement|bool

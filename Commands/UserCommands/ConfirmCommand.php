@@ -2,6 +2,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use Helpers\AdHelper;
 use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
@@ -20,7 +21,6 @@ class ConfirmCommand extends UserCommand
     {
         $message = new CallbackHelper($this);
         $chatId = $message->getChatId();
-
         return MessageHelper::sendMessage($chatId, $this->generateMessage());
     }
 

@@ -91,3 +91,18 @@ CREATE TABLE IF NOT EXISTS `admin_notes` (
   PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+CREATE TABLE IF NOT EXISTS `ads` (
+  `id` bigint(20) unsigned AUTO_INCREMENT COMMENT 'Unique identifier for this entry',
+  `code` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Identifier who are report the user',
+  `content` text NULL DEFAULT NULL COMMENT 'Identifier who are reported user',
+  `image` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Identifier who are report the user',
+  `metadata` text NULL DEFAULT '-' COMMENT 'Identifier why user reported',
+  `start_at` datetime NULL DEFAULT NULL COMMENT 'Entry date start',
+  `end_at` datetime NULL DEFAULT NULL COMMENT 'Entry date end',
+  `created_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date creation',
+  `updated_at` timestamp NULL DEFAULT NOW() COMMENT 'Entry date update',
+
+  PRIMARY KEY (`id`)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
