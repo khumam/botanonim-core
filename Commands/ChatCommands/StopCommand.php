@@ -51,7 +51,7 @@ class StopCommand extends UserCommand
     private function checkActiveChat($chatId): bool
     {
         $activeChat = ActiveChat::first(['from_id', '=', $chatId, 'or', 'to_id', '=', $chatId]);
-        return $activeChat;
+        return $activeChat ? true : false;
     }
 
     private function getActiveChat($chatId): mixed
