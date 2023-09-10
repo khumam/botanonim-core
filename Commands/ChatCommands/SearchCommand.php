@@ -2,8 +2,10 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
+use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
 use Models\ActiveChat;
@@ -23,19 +25,20 @@ class SearchCommand extends UserCommand
     public function execute(): ServerResponse
     {
         try {
-            $message = $this->getMessage();
-            $chatId = $message->getChat()->getId();
+            $message = new CallbackHelper($this);
+            $chatId = $message->getChatId();
+            $replyMarkup = $this->replyMarkup();
 
             if ($this->checkBanned($chatId)) {
                 return MessageHelper::sendMessage($chatId, 'Kamu telah dibanned, kamu tidak bisa menggunakan bot ini lagi. Kamu dibanned karena kami mendapatkan laporan bahwa kamu melanggar aturan yang ada.');
             }
 
             if ($this->checkActiveQueue($chatId)) {
-                return MessageHelper::sendMessage($chatId, 'Kamu sudah masuk ke dalam antrian. Cie belum dapet. Sabar ya nunggu sebentar lagi');
+                return MessageHelper::sendMessage($chatId, 'Kamu sudah masuk ke dalam antrian. Cie belum dapet. Sabar ya nunggu sebentar lagi!', 'HTML', $replyMarkup);
             }
             
             if ($this->checkActiveChat($chatId)) {
-                return MessageHelper::sendMessage($chatId, 'Kamu masih berhubungan dengan orang lain masa mau cari yang lain lagi :( /stop dulu dong');
+                return MessageHelper::sendMessage($chatId, 'Kamu masih berhubungan dengan orang lain masa mau cari yang lain lagi :( /stop dulu dong!', 'HTML', $replyMarkup);
             }
             
             if ($this->checkNotVerified($chatId)) {
@@ -45,7 +48,7 @@ class SearchCommand extends UserCommand
             $queue = $this->checkQueue($chatId);
             if (!$queue) {
                 $this->setQueue($chatId);
-                return MessageHelper::sendMessage($chatId, 'Tunggu sampai ada yang on ya. Kalau ada yang on nanti kami kasih notifikasi.');
+                return MessageHelper::sendMessage($chatId, 'Tunggu sampai ada yang on ya. Kalau ada yang on nanti kami kasih notifikasi.', 'HTML', $replyMarkup);
             } else {
                 $this->setActiveChat($queue, $chatId);
                 $this->deleteQueue($queue, $chatId);
@@ -111,6 +114,15 @@ class SearchCommand extends UserCommand
     {
         Queue::delete(['user_id', '=', $chatId]);
         return Queue::delete(['user_id', '=', $queue['user_id']]);
+    }
+
+    private function replyMarkup()
+    {
+        $keyboard = new InlineKeyboard([
+            ['text' => '❌ Stop chat', 'callback_data' => 'command_stop'],
+            ['text' => '⛔️ Peraturan bot', 'callback_data' => 'command_rules'],
+        ]);
+        return $keyboard;
     }
 
     private function generateMessage(): string
