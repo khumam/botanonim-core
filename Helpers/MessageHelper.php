@@ -46,4 +46,17 @@ class MessageHelper
     {
         return Request::emptyResponse();
     }
+
+    public static function sendAd($chatId, $message, $parseMode = 'HTML', $replyMarkup = null): ServerResponse
+    {
+        ActionHelper::sendTyping($chatId);
+        $data = [
+            'chat_id' => $chatId,
+            'parse_mode' => $parseMode,
+            'text' => '📢 ' . $message,
+            'reply_markup' => $replyMarkup
+        ];
+
+        return Request::sendMessage($data);
+    }
 }

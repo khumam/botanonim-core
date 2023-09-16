@@ -2,7 +2,6 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
-use Helpers\AdHelper;
 use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;

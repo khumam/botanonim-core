@@ -2,6 +2,7 @@
 
 namespace Longman\TelegramBot\Commands\UserCommands;
 
+use Helpers\AdHelper;
 use Helpers\CallbackHelper;
 use Helpers\MessageHelper;
 use Longman\TelegramBot\Commands\UserCommand;
@@ -28,6 +29,9 @@ class SearchCommand extends UserCommand
             $message = new CallbackHelper($this);
             $chatId = $message->getChatId();
             $replyMarkup = $this->replyMarkup();
+
+            $ads = new AdHelper($chatId);
+            $ads->send();
 
             if ($this->checkBanned($chatId)) {
                 return MessageHelper::sendMessage($chatId, 'Kamu telah dibanned, kamu tidak bisa menggunakan bot ini lagi. Kamu dibanned karena kami mendapatkan laporan bahwa kamu melanggar aturan yang ada.');

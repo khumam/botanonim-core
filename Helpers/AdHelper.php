@@ -13,6 +13,7 @@ class AdHelper
     public $content = '';
     public $chatId;
     public $ads;
+    public $mainLink = 'https://unnes.botanonim.com/';
 
     public function __construct($chatId)
     {
@@ -25,7 +26,7 @@ class AdHelper
         $now = "'" . date('Y-m-d') . "'";
         $this->ads = Ads::first(['DATE(start_at)', '<=', $now, 'and', 'DATE(end_at)', '>=', $now]);
         if ($this->ads) {
-            $this->image = $this->ads['image'];
+            $this->image = $this->mainLink . str_replace('public', 'storage', $this->ads['image']);
             $this->content = $this->ads['content'];
             $this->replyMarkup = $this->processReplyMarkup($this->ads['metadata']);
         }
@@ -51,7 +52,7 @@ class AdHelper
             if ($this->image !== null) {
                 MessageHelper::sendPhoto($this->chatId, $this->image);
             }
-            return MessageHelper::sendMessage($this->chatId, $this->content, 'HTML', $this->replyMarkup);
+            return MessageHelper::sendAd($this->chatId, $this->content, 'HTML', $this->replyMarkup);
         }
         return MessageHelper::sendEmptyResponse();
     }
