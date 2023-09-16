@@ -97,6 +97,8 @@ CREATE TABLE IF NOT EXISTS `ads` (
   `code` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Identifier who are report the user',
   `content` text NULL DEFAULT NULL COMMENT 'Identifier who are reported user',
   `image` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Identifier who are report the user',
+  `customer` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Identifier who are the customer',
+  `customer_contact` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Identifier what is the customer contact',
   `metadata` text NULL DEFAULT '-' COMMENT 'Identifier why user reported',
   `start_at` datetime NULL DEFAULT NULL COMMENT 'Entry date start',
   `end_at` datetime NULL DEFAULT NULL COMMENT 'Entry date end',
