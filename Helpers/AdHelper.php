@@ -13,7 +13,7 @@ class AdHelper
     public $content = '';
     public $chatId;
     public $ads;
-    public $mainLink = 'https://unnes.botanonim.com/';
+    public $mainLink = 'https://unnes.botanonim.com/storage/media/';
 
     public function __construct($chatId)
     {
@@ -26,7 +26,7 @@ class AdHelper
         $now = "'" . date('Y-m-d') . "'";
         $this->ads = Ads::first(['DATE(start_at)', '<=', $now, 'and', 'DATE(end_at)', '>=', $now]);
         if ($this->ads) {
-            $this->image = $this->mainLink . str_replace('public', 'storage', $this->ads['image']);
+            $this->image = $this->mainLink . $this->ads['image'];
             $this->content = $this->ads['content'];
             $this->replyMarkup = $this->processReplyMarkup($this->ads['metadata']);
         }
