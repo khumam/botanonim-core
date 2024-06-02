@@ -52,6 +52,13 @@ class AdHelper
             if ($this->image !== null) {
                 MessageHelper::sendPhoto($this->chatId, $this->image);
             }
+
+            // Add views data
+            $dataUpdate = [
+                'views' => $this->ads['views'] + 1,
+            ];
+            Ads::update($dataUpdate, ['id', '=', $this->ads['id']]);
+
             return MessageHelper::sendAd($this->chatId, $this->content, 'HTML', $this->replyMarkup);
         }
         return MessageHelper::sendEmptyResponse();
